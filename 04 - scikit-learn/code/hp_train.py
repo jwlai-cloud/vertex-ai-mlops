@@ -7,7 +7,7 @@ from sklearn.pipeline import Pipeline
 from sklearn import metrics
 
 import pickle
-import pandas as pd 
+import pandas as pd
 import numpy as np 
 
 from google.cloud import bigquery
@@ -98,7 +98,7 @@ model = pipe.fit(X_train, y_train)
 
 # test evaluations:
 y_pred = model.predict(X_test)
-test_acc = metrics.accuracy_score(y_test, y_pred) 
+test_acc = metrics.accuracy_score(y_test, y_pred)
 test_prec = metrics.precision_score(y_test, y_pred)
 test_rec = metrics.recall_score(y_test, y_pred)
 test_rocauc = metrics.roc_auc_score(y_test, y_pred)
@@ -106,7 +106,7 @@ expRun.log_metrics({'test_accuracy': test_acc, 'test_precision': test_prec, 'tes
 
 # val evaluations:
 y_pred_val = model.predict(X_val)
-val_acc = metrics.accuracy_score(y_val, y_pred_val) 
+val_acc = metrics.accuracy_score(y_val, y_pred_val)
 val_prec = metrics.precision_score(y_val, y_pred_val)
 val_rec = metrics.recall_score(y_val, y_pred_val)
 val_rocauc = metrics.roc_auc_score(y_val, y_pred_val)
@@ -114,7 +114,7 @@ expRun.log_metrics({'validation_accuracy': val_acc, 'validation_precision': val_
 
 # training evaluations:
 y_pred_training = model.predict(X_train)
-training_acc = metrics.accuracy_score(y_train, y_pred_training) 
+training_acc = metrics.accuracy_score(y_train, y_pred_training)
 training_prec = metrics.precision_score(y_train, y_pred_training)
 training_rec = metrics.recall_score(y_train, y_pred_training)
 training_rocauc = metrics.roc_auc_score(y_train, y_pred_training)
@@ -129,7 +129,7 @@ file_name = 'model.pkl'
 
 # Use predefined environment variable to establish model directory
 model_directory = os.environ['AIP_MODEL_DIR']
-storage_path = f'/gcs/{model_directory[5:]}' + file_name
+storage_path = f'/gcs/{model_directory[5:]}{file_name}'
 os.makedirs(os.path.dirname(storage_path), exist_ok=True)
 
 # output the model save files directly to GCS destination

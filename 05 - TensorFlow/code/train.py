@@ -67,18 +67,16 @@ def transTable(row_dict):
 def bq_reader(split):
     reader = BigQueryClient()
 
-    training = reader.read_session(
-        parent = f"projects/{args.project_id}",
-        project_id = args.bq_project,
-        table_id = args.bq_table,
-        dataset_id = args.bq_dataset,
-        selected_fields = selected_fields,
-        output_types = output_types,
-        row_restriction = f"splits='{split}'",
-        requested_streams = 3
+    return reader.read_session(
+        parent=f"projects/{args.project_id}",
+        project_id=args.bq_project,
+        table_id=args.bq_table,
+        dataset_id=args.bq_dataset,
+        selected_fields=selected_fields,
+        output_types=output_types,
+        row_restriction=f"splits='{split}'",
+        requested_streams=3,
     )
-    
-    return training
 
 # setup feed for train, validate and test
 train = bq_reader('TRAIN').parallel_read_rows().prefetch(1).map(transTable).shuffle(args.batch_size*10).batch(args.batch_size)
